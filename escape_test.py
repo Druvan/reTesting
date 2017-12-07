@@ -17,7 +17,7 @@ class TestString(unittest.TestCase):
         self.assertEqual(re.escape("!hej1020("), "\!hej1020\(")
         self.assertEqual(re.escape("\("), "\\(")
         
-    def whiteboxTest(self):
+    def escapeWB(self):
         self.assertEqual(re.escape(""), "")
         self.assertEqual(re.escape("python.exe"), "python\.exe")
         self.assertEqual(re.escape("a null" + None + "inbetween"), "a null \\000 inbetween")
