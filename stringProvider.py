@@ -7,9 +7,8 @@ def testSubHelperB():
 
 def stringMultiply(stringToMultiply,multiple):
     string = ""
-    for _ in range(multiple):
-        string = string + stringToMultiply
+    string = stringToMultiply * multiple
+
     if string[-1] == ",":
         string = string[0:-1]
-    print (string[-1])
     return string
