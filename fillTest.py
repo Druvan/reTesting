@@ -7,14 +7,14 @@ from textWrap_example import sample_text
 
 
 
-def wrap(text, width=70, **kwargs):
+def fill(text, width=70, **kwargs):
 #Wrap a single paragraph of text, returning a list of wrapped lines.
-    return wrap
+    return fill
 
-class wrapTest(unittest.TestCase):
+class fillTest(unittest.TestCase):
 #testa om en line är längre än 70 width
-    def testWrap(self):
-        self.assertEqual(wrap(sample_text), seventyone)
+    def testfill(self):
+        self.assertEqual(fill(sample_text), seventyone)
         #testa in/output valid
 
 
