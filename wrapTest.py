@@ -15,7 +15,11 @@ class testStr(unittest.TestCase):
 #testa om en line är längre än 70 width
     def testWrap(self):
         self.assertEqual(wrap(sample_text), seventyone)
+        #testa in/output valid
 
 
 if __name__ == '__main__':
     unittest.main()
+
+
+
