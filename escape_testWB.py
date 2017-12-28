@@ -2,8 +2,8 @@ import re
 import unittest
 import stringProvider
 
-_alphanum_str = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
-_alphanum_bytes = set(b'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
+_alphanum_str = set('_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
+_alphanum_bytes = set(b'_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
 
 def escape(pattern):
     """
@@ -24,6 +24,7 @@ def escape(pattern):
         s = []
         esc = ord(b"\\")
         for c in pattern:
+            print(c)
             if c in alphanum:
                 s.append(c)
             else:
@@ -38,7 +39,10 @@ class TestString(unittest.TestCase):
     def testEscapeWB(self):
         self.assertEqual(escape(""), "")
         self.assertEqual(escape("python.exe"), "python\.exe")
-        self.assertEqual(escape("a null" + "inbetween"), "a null \\000 inbetween")
+        self.assertEqual(escape("\00"), "\\000")
 
+        self.assertEqual(escape(bytearray(1)), b"\\000")
+        self.assertEqual(escape(bytearray('hej', 'ascii')), b"hej")
+        self.assertEqual(escape(bytearray('he\b', 'ascii')), b'he\\\x08')
 if __name__ == '__main__':
     unittest.main()
