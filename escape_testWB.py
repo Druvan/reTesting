@@ -1,6 +1,4 @@
-import re
 import unittest
-import stringProvider
 
 _alphanum_str = set('_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
 _alphanum_bytes = set(b'_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
@@ -24,7 +22,6 @@ def escape(pattern):
         s = []
         esc = ord(b"\\")
         for c in pattern:
-            print(c)
             if c in alphanum:
                 s.append(c)
             else:
