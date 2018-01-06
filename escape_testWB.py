@@ -32,7 +32,7 @@ def escape(pattern):
                     s.append(c)
         return bytes(s)
 
-class TestString(unittest.TestCase):
+class TestString(unittest.TestCase): # pragma: no cover
     def testEscapeWB(self):
         self.assertEqual(escape(""), "")
         self.assertEqual(escape("python.exe"), "python\.exe")
@@ -41,5 +41,5 @@ class TestString(unittest.TestCase):
         self.assertEqual(escape(bytearray(1)), b"\\000")
         self.assertEqual(escape(bytearray('hej', 'ascii')), b"hej")
         self.assertEqual(escape(bytearray('he\b', 'ascii')), b'he\\\x08')
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     unittest.main()
