@@ -16,8 +16,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"""
 shorten = "aaaaa bbbbbb"
 shorten_long = "aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
+ind  = 'aaaaa\n\n \nbbbbb'
+
+
 
 class TestString(unittest.TestCase):
+
 
     #WRAP
     def testWrap(self): 
@@ -42,9 +46,13 @@ class TestString(unittest.TestCase):
         self.assertEqual(textwrap.shorten(shorten_long, width=20), 'aaaaaaaaaa [...]')
         self.assertEqual(len(textwrap.shorten(shorten, width=11)), 11)
         self.assertEqual(len(textwrap.shorten(shorten, width=10, placeholder="...")), 8)
-        
-        
+
+    #Indent
+    def testIndent(self):
+        self.assertEqual(textwrap.indent(ind, '+ ', lambda line: True), ('+ aaaaa\n+ \n+  \n+ bbbbb'))
+        self.assertEqual(len(textwrap.indent(ind, '+ ', lambda line: True)), 22)
+     
         
 
 if __name__ == '__main__':
-   unittest.main()
+    unittest.main()
