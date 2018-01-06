@@ -51,6 +51,7 @@ class TestString(unittest.TestCase):
     def testIndent(self):
         self.assertEqual(textwrap.indent(ind, '+ ', lambda line: True), ('+ aaaaa\n+ \n+  \n+ bbbbb'))
         self.assertEqual(len(textwrap.indent(ind, '+ ', lambda line: True)), 22)
+        self.assertEqual(len(textwrap.indent((value_extralong, '+ ', lambda line: True)), 102))
      
         
 
