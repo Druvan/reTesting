@@ -14,6 +14,8 @@ class TestString(unittest.TestCase):
 
         self.assertTrue("1".isdecimal())
         self.assertTrue("0".isdecimal())
+        self.assertFalse("¼".isdigit())
+        self.assertTrue("²".isdigit())
 
         self.assertFalse("-1".isdecimal())
         self.assertFalse("(-1)".isdecimal())
