@@ -16,6 +16,8 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"""
 shorten = "aaaaa bbbbbb"
 shorten_long = "aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
+empty = ''
+
 ind  = 'aaaaa\n\n \nbbbbb'
 
 
@@ -36,6 +38,7 @@ class TestString(unittest.TestCase):
         self.assertEqual(textwrap.fill(value, width=10), ('aaaaaaaaaa\nbbbbbbbbbb\ncccccccccc\ncccccccccc'))
         self.assertEqual(textwrap.fill(value, width=5), ('aaaaa\naaaaa\nbbbbb\nbbbbb\nccccc\nccccc\nccccc\nccccc'))
         self.assertEqual(textwrap.fill(value_long, width=20), ('aaaaaaaaaabbbbbbbbbb\ncccccccccccccccccccc'))
+        self.assertEqual(textwrap.fill(empty, width=20), (''))
         self.assertEqual(len(textwrap.fill(value, width=10)), 43)
         self.assertEqual(len(textwrap.fill(value, width=2)), 59)
 
@@ -44,6 +47,7 @@ class TestString(unittest.TestCase):
         self.assertEqual(textwrap.shorten(shorten, width=11), 'aaaaa [...]')
         self.assertEqual(textwrap.shorten(shorten, width=10, placeholder="..."), 'aaaaa...')
         self.assertEqual(textwrap.shorten(shorten_long, width=20), 'aaaaaaaaaa [...]')
+        self.assertEqual(textwrap.shorten(empty, width=20), '')
         self.assertEqual(len(textwrap.shorten(shorten, width=11)), 11)
         self.assertEqual(len(textwrap.shorten(shorten, width=10, placeholder="...")), 8)
 
@@ -51,10 +55,10 @@ class TestString(unittest.TestCase):
     def testIndent(self):
         self.assertEqual(textwrap.indent(ind, '+ ', lambda line: True), ('+ aaaaa\n+ \n+  \n+ bbbbb'))
         self.assertEqual(len(textwrap.indent(ind, '+ ', lambda line: True)), 22)
-        self.assertEqual(len(textwrap.indent((value_extralong, '+ ', lambda line: True)), 102))
+        self.assertEqual(len(textwrap.indent(empty, '+ ', lambda line: True)), 0)
+        #self.assertEqual(len(textwrap.indent((value_extralong, '+ ', lambda line: True))), 102)
     #Dedent
     def testWrap_dedent(self):
-
         self.assertEqual(textwrap.dedent('b').strip(), 'b')
         self.assertEqual(textwrap.dedent('').strip(), '')
         self.assertEqual(textwrap.dedent('$$$\n   $$$\n  $$$').strip(), '$$$\n   $$$\n  $$$')
