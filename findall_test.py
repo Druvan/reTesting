@@ -41,5 +41,12 @@ class TestString(unittest.TestCase):
         string = sp.stringMultiply("abc de",5000)
         facit = create_result(" ",5000)
         self.assertEqual(re.findall(" ",string), facit)   
+
+        with self.assertRaises(TypeError):
+            self.assertEqual(re.findall(1,"111"), "111")
+            self.assertEqual(re.findall("1",111), "111")
+            self.assertEqual(re.findall(a,"aa"), "aa")
+            self.assertEqual(re.findall("a",aa), "aa")
+        
 if __name__ == '__main__':
     unittest.main()
