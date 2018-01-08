@@ -4,17 +4,6 @@ import unittest
 import re
 import textwrap
 
-
-
-def splitter(string, sign):
-    return string.split(sign)
-
-def _upper(string):
-    return string.upper()
-
-def _lower(string):
-    return string.lower()
-
 def reg_fullmatch(pattern, text):
 
     if re.fullmatch(pattern, text):
@@ -22,59 +11,26 @@ def reg_fullmatch(pattern, text):
     else:
         return False
 
-
-def reg_full_match(pattern, text, flags):
-
-    if re.fullmatch(pattern, text, flags):
-        return True
-    else:
-        return False
-
-def subber(toReplace, replaceWith, sourceStr):
-
-    return re.sub(toReplace, replaceWith, sourceStr)
-
-def wrap_fill(text):
-
-    return textwrap.dedent(text).strip()
-
-
-
-"""
-    long string
-    one character
-    empty string
-    non alphanumeric
-    numbers
-    built-in error types
-    wrong data types
-
-
-"""
-
 class testStr(unittest.TestCase):
 
     def testSplit(self):
 
         self.assertEqual('a'.split(','), ['a'])
-        self.assertEqual(splitter("a", ","), ['a'])
-        self.assertEqual(splitter("", ","), [""])
-        self.assertEqual(splitter("@,#,€", ","), ['@','#','€'])
-        self.assertEqual(splitter("1,2,3", "k"), ["1,2,3"])
-        self.assertRaises(TypeError, splitter, ("1,2", 3))
-        self.assertRaises(TypeError, splitter, (1, 2, ','))
-        self.assertRaises(ValueError, splitter, (""), (""))
-        self.assertEqual(splitter("1,2,3", ","), ['1', '2', '3'])
+        self.assertEqual(''.split(','), [''])
+        self.assertEqual("@,#,€".split(','),  ['@','#','€'])
+        self.assertEqual('1,2,3'.split('k'), ['1,2,3'])
+        self.assertRaises(TypeError, '1,2'.split, 3)
+        self.assertRaises(ValueError, ''.split, '')
+        self.assertEqual('1,2,3'.split(','), ['1', '2', '3'])
 
     def testUpper(self):
 
-        self.assertEqual(_upper("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+        self.assertEqual("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".upper()
                                 , "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
-        self.assertEqual(_upper("å"), 'Å')
-        self.assertEqual(_upper(""), "")
-        self.assertEqual(_upper("%€#"), "%€#")
-        self.assertRaises(AttributeError, _upper, (123))
-        self.assertRaises(AttributeError, _upper, ({"bla" : 5}))
+        self.assertEqual("å".upper(), 'Å')
+        self.assertEqual("".upper(), "")
+        self.assertEqual("%€#".upper(), "%€#")
+        self.assertRaises(TypeError, str.upper, (123))
 
     def testFullMatch(self):
 
@@ -91,28 +47,28 @@ class testStr(unittest.TestCase):
         self.assertEqual(reg_fullmatch("()?", "()?"), False)
 
     def testSub(self):
-        self.assertEqual(subber("a", "b", stringProvider.testSubHelperA()), stringProvider.testSubHelperB())
-        self.assertEqual(subber("a", "b", "a"), "b")
-        self.assertEqual(subber("", "", ""), "")
-        self.assertEqual(subber("@", "€€€", "@%@"), "€€€%€€€")
-        self.assertRaises(TypeError, subber, 1, "b", "1234")
-        self.assertRaises(TypeError, subber, "a", "b", {"kul":5})
+        self.assertEqual(re.sub("a", "b", stringProvider.testSubHelperA()), stringProvider.testSubHelperB())
+        self.assertEqual(re.sub("a", "b", "a"), "b")
+        self.assertEqual(re.sub("", "", ""), "")
+        self.assertEqual(re.sub('@', '€€€', '@%@'), '€€€%€€€')
+        self.assertRaises(TypeError, re.sub, 1, "b", "1234")
+        self.assertRaises(TypeError, re.sub, "a", "b", {"kul":5})
 
     def testLower(self):
-        self.assertEqual(_lower("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+        self.assertEqual("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB".lower()
                                 , "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-        self.assertEqual(_lower("B"), 'b')
-        self.assertEqual(_lower(""), "")
-        self.assertEqual(_lower("%€#"), "%€#")
-        self.assertRaises(AttributeError, _lower, (123))
-        self.assertRaises(AttributeError, _lower, ({"bla" : 5}))
+        self.assertEqual("B".lower(), 'b')
+        self.assertEqual("".lower(), "")
+        self.assertEqual("%€#".lower(), "%€#")
+        self.assertRaises(TypeError, str.lower, (123))
+        self.assertRaises(TypeError, str.lower, ({"bla" : 5}))
 
     def testWrap(self):
-        
-        self.assertEqual(wrap_fill("b"), "b")
-        self.assertEqual(wrap_fill(""), "")
-        self.assertEqual(wrap_fill("$$$\n   $$$\n  $$$"), "$$$\n   $$$\n  $$$")
-        self.assertRaises(TypeError, wrap_fill, 123)
+
+        self.assertEqual(textwrap.dedent('b').strip(), 'b')
+        self.assertEqual(textwrap.dedent('').strip(), '')
+        self.assertEqual(textwrap.dedent('$$$\n   $$$\n  $$$').strip(), '$$$\n   $$$\n  $$$')
+        self.assertRaises(TypeError, textwrap.dedent, 123)
 
 if __name__ == '__main__':
     unittest.main()
