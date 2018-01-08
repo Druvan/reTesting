@@ -3,7 +3,7 @@ import code
 import unittest
 import re
 import textwrap
-from textwrap_example import sample_text_longer
+
 
 
 def splitter(string, sign):
@@ -56,6 +56,7 @@ class testStr(unittest.TestCase):
 
     def testSplit(self):
 
+        self.assertEqual('a'.split(','), ['a'])
         self.assertEqual(splitter("a", ","), ['a'])
         self.assertEqual(splitter("", ","), [""])
         self.assertEqual(splitter("@,#,€", ","), ['@','#','€'])
@@ -107,7 +108,7 @@ class testStr(unittest.TestCase):
         self.assertRaises(AttributeError, _lower, ({"bla" : 5}))
 
     def testWrap(self):
-        self.assertEqual(wrap_fill(sample_text_longer),"paragraph\n  bbbbbbb\n    cccccc")
+        
         self.assertEqual(wrap_fill("b"), "b")
         self.assertEqual(wrap_fill(""), "")
         self.assertEqual(wrap_fill("$$$\n   $$$\n  $$$"), "$$$\n   $$$\n  $$$")
