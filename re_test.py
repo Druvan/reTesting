@@ -39,7 +39,13 @@ class re_test(unittest.TestCase):
         self.assertRaises(TypeError, re.sub, 1, "b", "1234")
         self.assertRaises(TypeError, re.sub, "a", "b", {"kul":5})
 
-
+ #Finditer    
+    def testFinditer(self):
+        iter1 = re.finditer(r"\s", "a b")
+        iter2 = re.finditer(r"!+", "x!y!!z!!!v")
+        self.assertEqual([exclamation.group(0) for exclamation in iter2],
+                         ["!", "!!", "!!!"])
+        self.assertEqual(next(iter1).span(), (1,2))
 
 if __name__ == '__main__':
     unittest.main()
