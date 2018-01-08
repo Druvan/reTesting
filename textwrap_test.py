@@ -24,14 +24,14 @@ class TestString(unittest.TestCase):
 
 
     #WRAP
-    def testWrap(self): 
+    def testWrap(self):
         self.assertEqual(textwrap.wrap(value, width=10), ['aaaaaaaaaa', 'bbbbbbbbbb', 'cccccccccc', 'cccccccccc'])
         self.assertEqual(textwrap.wrap(value, width=5), ['aaaaa', 'aaaaa', 'bbbbb', 'bbbbb', 'ccccc', 'ccccc', 'ccccc', 'ccccc'])
         self.assertEqual(textwrap.wrap(value_long, width=20), ['aaaaaaaaaabbbbbbbbbb', 'cccccccccccccccccccc'])
         self.assertEqual(len(textwrap.wrap(value, width=10)), 4)
         self.assertEqual(len(textwrap.wrap(value, width=2)), 20)
 
-    #FILL    
+    #FILL
     def testFill(self):
         self.assertEqual(textwrap.fill(value, width=10), ('aaaaaaaaaa\nbbbbbbbbbb\ncccccccccc\ncccccccccc'))
         self.assertEqual(textwrap.fill(value, width=5), ('aaaaa\naaaaa\nbbbbb\nbbbbb\nccccc\nccccc\nccccc\nccccc'))
@@ -52,8 +52,13 @@ class TestString(unittest.TestCase):
         self.assertEqual(textwrap.indent(ind, '+ ', lambda line: True), ('+ aaaaa\n+ \n+  \n+ bbbbb'))
         self.assertEqual(len(textwrap.indent(ind, '+ ', lambda line: True)), 22)
         self.assertEqual(len(textwrap.indent((value_extralong, '+ ', lambda line: True)), 102))
-     
-        
+    #Dedent
+    def testWrap_dedent(self):
+
+        self.assertEqual(textwrap.dedent('b').strip(), 'b')
+        self.assertEqual(textwrap.dedent('').strip(), '')
+        self.assertEqual(textwrap.dedent('$$$\n   $$$\n  $$$').strip(), '$$$\n   $$$\n  $$$')
+        self.assertRaises(TypeError, textwrap.dedent, 123)
 
 if __name__ == '__main__':
     unittest.main()
