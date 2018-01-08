@@ -7,6 +7,7 @@ value = "aabaa"
 class MatchTest(unittest.TestCase):
     def test_match(self):
 
+        self.assertEqual(re.match("a", "a").span(), (0, 1))
         self.assertEqual(re.match("b", value), None)
         self.assertEqual(re.match("a", value).span(), (0, 1))
         self.assertEqual(re.match("c", value), None)
